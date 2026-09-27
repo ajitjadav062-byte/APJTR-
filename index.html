@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="gu">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>APJ TR</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="login" class="login-wrap">
+  <form id="loginForm" class="card login-card">
+    <div class="logo">APJ TR</div><h1>માસ્ટર લોગીન</h1>
+    <label>યુઝર નામ<input id="username" value="admin" required></label>
+    <label>પાસવર્ડ<input id="password" type="password" value="APJ@123" required></label>
+    <button>લોગીન</button><small>પ્રથમ લોગીન: admin / APJ@123, પછી પાસવર્ડ બદલો.</small><p id="loginError" class="danger"></p>
+  </form>
+</div>
+<div id="app" class="hidden">
+<header><button id="menuBtn" class="icon-btn">☰</button><b>APJ TR</b><span id="today"></span><button id="logout" class="outline">લોગઆઉટ</button></header>
+<div class="layout">
+<aside id="sidebar">
+<button data-page="dashboard" class="active">🏠 ડેશબોર્ડ</button>
+<button data-page="papers">📝 પરીક્ષા પેપર</button>
+<button data-page="results">📊 પરિણામ</button>
+<button data-page="students">👦 વિદ્યાર્થી ટ્રેકિંગ</button>
+<button data-page="records">📚 અભ્યાસક્રમ અને નોંધ</button>
+<button data-page="assembly">🙏 પ્રાર્થના સંમેલન</button>
+<button data-page="files">📁 ફાઇલ સેન્ટર</button>
+<button data-page="admin">🏫 વહીવટ</button>
+</aside>
+<main>
+<section id="dashboard" class="page active"><h1>સ્વાગત છે 👋</h1><div id="alerts"></div><div class="stats"><div class="stat"><b id="studentCount">0</b><span>વિદ્યાર્થી</span></div><div class="stat"><b id="paperCount">0</b><span>પેપર</span></div><div class="stat"><b id="resultCount">0</b><span>પરિણામ</span></div><div class="stat"><b id="noteCount">0</b><span>નોંધ</span></div></div><div class="card"><h2>ઝડપી કાર્ય</h2><div class="quick"><button data-go="papers">નવું પેપર</button><button data-go="results">પરિણામ ઉમેરો</button><button data-go="students">વિદ્યાર્થી ઉમેરો</button><button data-go="records">દૈનિક નોંધ</button></div></div></section>
+<section id="papers" class="page"><h1>પરીક્ષા પેપર બનાવો</h1><div class="grid2"><form id="paperForm" class="card"><label>વિષય<input id="pSubject" required></label><label>ધોરણ<input id="pClass" required></label><label>કુલ ગુણ<select id="pMarks"><option>20</option><option>25</option><option>30</option><option>40</option><option>50</option><option>80</option></select></label><label>સમય<input id="pTime" value="1 કલાક"></label><label>પ્રશ્નો (દરેક નવી લાઇનમાં)<textarea id="pQuestions" rows="9" placeholder="1. પ્રશ્ન..."></textarea></label><button>પેપર બનાવો</button></form><div class="card"><h2>પ્રિવ્યૂ</h2><div id="paperPreview" class="paper">અહીં પેપર દેખાશે</div><div class="actions"><button id="printPaper" type="button">PDF / પ્રિન્ટ</button><button id="downloadPaper" type="button">HTML ડાઉનલોડ</button></div></div></div><div class="card"><h2>સાચવેલા પેપર</h2><div id="paperList"></div></div></section>
+<section id="results" class="page"><h1>પરીક્ષા પરિણામ</h1><div class="grid2"><form id="resultForm" class="card"><label>વિદ્યાર્થી<select id="rStudent"></select></label><label>વિષય<input id="rSubject" required></label><label>મેળવેલ ગુણ<input id="rScore" type="number" min="0" required></label><label>કુલ ગુણ<input id="rTotal" type="number" min="1" required></label><button>પરિણામ ઉમેરો</button></form><div class="card"><h2>પ્રદર્શન ગ્રાફ</h2><canvas id="chart" width="620" height="300"></canvas></div></div><div class="card"><div class="actions"><button id="exportResults">CSV / Excel</button><button id="printResults">PDF / પ્રિન્ટ</button></div><div class="table-wrap"><table><thead><tr><th>વિદ્યાર્થી</th><th>વિષય</th><th>ગુણ</th><th>%</th><th></th></tr></thead><tbody id="resultRows"></tbody></table></div></div></section>
+<section id="students" class="page"><h1>વિદ્યાર્થી ટ્રેકિંગ</h1><form id="studentForm" class="card inline-form"><input id="sName" placeholder="નામ" required><input id="sClass" placeholder="ધોરણ" required><input id="sParent" placeholder="વાલીનો સંપર્ક"><select id="sStatus"><option>નિયમિત</option><option>ધ્યાન જરૂરી</option><option>ઉત્તમ</option></select><button>ઉમેરો</button></form><div id="studentCards" class="cards"></div></section>
+<section id="records" class="page"><h1>અભ્યાસક્રમ, દૈનિક નોંધ અને અહેવાલ</h1><form id="noteForm" class="card"><div class="grid2"><label>પ્રકાર<select id="nType"><option>અભ્યાસક્રમ</option><option>દૈનિક નોંધ</option><option>અહેવાલ</option></select></label><label>તારીખ<input id="nDate" type="date"></label></div><label>શીર્ષક<input id="nTitle" required></label><label>વિગત<textarea id="nBody" rows="6" required></textarea></label><button>સાચવો</button></form><div id="noteList"></div></section>
+<section id="assembly" class="page"><h1>પ્રાર્થના સંમેલન</h1><form id="assemblyForm" class="card"><label>વિષય<input id="aTheme" required placeholder="જેમ કે પર્યાવરણ"></label><label>તારીખ<input id="aDate" type="date"></label><label>વિશેષ વિચાર<textarea id="aThought" rows="3"></textarea></label><button>સંમેલન તૈયાર કરો</button></form><div id="assemblyOutput" class="card"></div></section>
+<section id="files" class="page"><h1>ફાઇલ સેન્ટર</h1><div class="card"><input id="fileInput" type="file" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.html,.txt,.csv"><p>PDF, Word, Excel, PNG, JPEG, HTML અને અન્ય ફાઇલ પસંદ કરો. ફાઇલની વિગતો આ બ્રાઉઝરમાં જ રહે છે.</p><div id="fileList"></div></div><div class="card"><h2>સરળ કન્વર્ટર</h2><p>ટેક્સ્ટ/CSV/HTML ફાઇલને TXT અથવા HTML સ્વરૂપે ડાઉનલોડ કરો.</p><input id="convertInput" type="file" accept=".txt,.csv,.html"><button id="toTxt">TXT માં</button><button id="toHtml">HTML માં</button></div></section>
+<section id="admin" class="page"><h1>વહીવટી કાર્ય</h1><div class="grid2"><form id="eventForm" class="card"><h2>વિશેષ દિવસ સૂચના</h2><label>નામ<input id="eName" required></label><label>તારીખ<input id="eDate" type="date" required></label><button>ઉમેરો</button></form><div class="card"><h2>સીધી ડેટા લિંક</h2><label>શીર્ષક<input id="lTitle"></label><label>લિંક<input id="lUrl" type="url" placeholder="https://..."></label><button id="addLink">લિંક ઉમેરો</button><div id="linkList"></div></div></div><div class="card danger-zone"><h2>બેકઅપ</h2><button id="backup">તમામ ડેટા ડાઉનલોડ</button><label class="file-label">ડેટા રિસ્ટોર<input id="restore" type="file" accept=".json"></label><button id="clearData" class="danger-btn">બધો ડેટા કાઢો</button></div></section>
+</main></div></div>
+<script src="app.js"></script></body></html>

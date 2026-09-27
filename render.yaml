@@ -1,20 +1,13 @@
 services:
   - type: web
-    name: apj-tr-api
-    runtime: node
-    buildCommand: npm install
-    startCommand: npm start
-    healthCheckPath: /health
+    name: apj-tr
+    runtime: docker
+    plan: starter
+    healthCheckPath: /
+    disk:
+      name: apj-tr-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
-      - key: NODE_ENV
-        value: production
-      - key: DATABASE_URL
-        fromDatabase:
-          name: apj-tr-db
-          property: connectionString
-      - key: CORS_ORIGIN
-        value: "*"
-databases:
-  - name: apj-tr-db
-    databaseName: apjtr
-    user: apjtr
+      - key: ADMIN_PASSWORD
+        generateValue: true
