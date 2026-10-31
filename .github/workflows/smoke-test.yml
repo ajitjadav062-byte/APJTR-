@@ -25,6 +25,13 @@ jobs:
           grep -q 'main{width:100%' style.css
           grep -q "\$('#restore').disabled=true" app.js
 
+      - name: Check backup and restore safety notice
+        run: |
+          grep -q 'બેકઅપ JSONમાં' index.html
+          grep -q 'મૂળ કન્ટેન્ટ આ JSONમાં સામેલ નથી' index.html
+          grep -q 'હાલ બંધ' index.html
+          grep -q "\$('#restore').disabled=true" app.js
+
       - name: Start app and verify core routes
         shell: bash
         run: |
