@@ -19,6 +19,8 @@ jobs:
           node --check test/integration.js
           node --check test/persistence.js
           node --check test/score-boundaries.js
+          node --check scripts/backup.js
+          node --check test/backup.js
       - name: Check responsive layout and safe restore state
         run: |
           grep -q '@media(max-width:850px)' style.css
@@ -61,3 +63,6 @@ jobs:
 
       - name: Score validation boundary tests
         run: node test/score-boundaries.js
+
+      - name: Backup snapshot and checksum tests
+        run: node test/backup.js
