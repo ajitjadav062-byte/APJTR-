@@ -18,6 +18,13 @@ jobs:
           node --check app.js
           node --check test/integration.js
           node --check test/persistence.js
+      - name: Check responsive layout and safe restore state
+        run: |
+          grep -q '@media(max-width:850px)' style.css
+          grep -q '@media(max-width:520px)' style.css
+          grep -q 'main{width:100%' style.css
+          grep -q "\$('#restore').disabled=true" app.js
+
       - name: Start app and verify core routes
         shell: bash
         run: |
