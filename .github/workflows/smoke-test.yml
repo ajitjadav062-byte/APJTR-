@@ -17,6 +17,7 @@ jobs:
           node --check server.js
           node --check app.js
           node --check test/integration.js
+          node --check test/persistence.js
       - name: Start app and verify core routes
         shell: bash
         run: |
@@ -39,3 +40,6 @@ jobs:
 
       - name: Integration tests for records, files and sessions
         run: node test/integration.js
+
+      - name: Persistence test across server restart
+        run: node test/persistence.js
