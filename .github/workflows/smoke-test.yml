@@ -16,6 +16,7 @@ jobs:
         run: |
           node --check server.js
           node --check app.js
+          node --check test/integration.js
       - name: Start app and verify core routes
         shell: bash
         run: |
@@ -35,3 +36,6 @@ jobs:
           test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3123/api/records/students)" = "401"
           curl -fsS -c /tmp/apj-cookie -H 'Content-Type: application/json' -d '{"username":"admin","password":"CI-only-password-12345"}' http://127.0.0.1:3123/api/login | grep -q '"ok":true'
           curl -fsS -b /tmp/apj-cookie http://127.0.0.1:3123/api/records/students >/dev/null
+
+      - name: Integration tests for records, files and sessions
+        run: node test/integration.js
