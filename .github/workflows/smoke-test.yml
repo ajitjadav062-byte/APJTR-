@@ -1,0 +1,37 @@
+name: APJ TR smoke test
+on:
+  push:
+    branches:
+      - apjtr-security-fixes
+  workflow_dispatch:
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Check JavaScript syntax
+        run: |
+          node --check server.js
+          node --check app.js
+      - name: Start app and verify core routes
+        shell: bash
+        run: |
+          export ADMIN_PASSWORD='CI-only-password-12345'
+          export DATA_DIR="$(mktemp -d)"
+          export PORT=3123
+          node server.js >server.log 2>&1 &
+          PID=$!
+          trap 'kill "$PID" 2>/dev/null || true' EXIT
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3123/ >/tmp/apj-index.html; then break; fi
+            sleep 1
+          done
+          grep -q 'APJ TR' /tmp/apj-index.html
+          curl -fsS http://127.0.0.1:3123/style.css >/dev/null
+          curl -fsS http://127.0.0.1:3123/app.js >/dev/null
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3123/api/records/students)" = "401"
+          curl -fsS -c /tmp/apj-cookie -H 'Content-Type: application/json' -d '{"username":"admin","password":"CI-only-password-12345"}' http://127.0.0.1:3123/api/login | grep -q '"ok":true'
+          curl -fsS -b /tmp/apj-cookie http://127.0.0.1:3123/api/records/students >/dev/null
