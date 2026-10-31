@@ -22,5 +22,7 @@ The web server serves only the checked-in `index.html`, `style.css`, and `app.js
 - Run `BACKUP_DIR=/secure/backup/location npm run backup` (keep the path private and access-controlled).
 - The command creates a new backup folder containing a SQLite online-backup snapshot, copies of uploaded files, and a SHA-256 manifest.
 - It checks SQLite integrity and verifies copied upload checksums. If any source upload is missing or invalid, the backup is marked failed and the partial folder is removed.
-- Keep backups off the app's public web directory and outside the persistent app data directory. Protect backup storage with restricted access and encryption at rest.
-- This is a backup-only operation. It does not restore data, change the live database, or expose a web backup endpoint. Restore remains disabled and must be separately designed and tested.
+- Verify a completed backup before considering recovery: `npm run verify-backup -- /path/to/backup-folder`.
+- Verification is read-only. It checks the manifest format, database and upload hashes/sizes, SQLite integrity, database-to-manifest file metadata, and rejects unsafe paths or symbolic links.
+- Keep backups off the app's public web directory and outside the persistent app data directory. Protect backup storage with restricted access and encryption at rest. For Render, use a separately configured external storage destination; a directory outside `/var/data` inside an ephemeral container is not durable.
+- These commands do not restore data, change the live database, or expose a web backup endpoint. Restore remains disabled and must be separately designed and tested.
