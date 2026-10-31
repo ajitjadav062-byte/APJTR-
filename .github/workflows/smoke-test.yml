@@ -20,6 +20,7 @@ jobs:
           node --check test/persistence.js
           node --check test/score-boundaries.js
           node --check scripts/backup.js
+          node --check scripts/verify-backup.js
           node --check test/backup.js
       - name: Check responsive layout and safe restore state
         run: |
@@ -64,5 +65,5 @@ jobs:
       - name: Score validation boundary tests
         run: node test/score-boundaries.js
 
-      - name: Backup snapshot and checksum tests
+      - name: Backup snapshot, verification and tamper tests
         run: node test/backup.js
