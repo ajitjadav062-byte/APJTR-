@@ -18,6 +18,7 @@ jobs:
           node --check app.js
           node --check test/integration.js
           node --check test/persistence.js
+          node --check test/score-boundaries.js
       - name: Check responsive layout and safe restore state
         run: |
           grep -q '@media(max-width:850px)' style.css
@@ -57,3 +58,6 @@ jobs:
 
       - name: Persistence test across server restart
         run: node test/persistence.js
+
+      - name: Score validation boundary tests
+        run: node test/score-boundaries.js
