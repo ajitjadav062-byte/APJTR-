@@ -76,7 +76,8 @@ const assert = require('node:assert/strict');
       ['sample.png', 'image/png', Buffer.from([137,80,78,71,13,10,26,10])],
       ['sample.doc', 'application/msword', Buffer.from([208,207,17,224,161,177,26,225])],
       ['sample.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', Buffer.from([80,75,3,4,0,0])],
-      ['sample.mp4', 'video/mp4', Buffer.from([0,0,0,24,102,116,121,112,105,115,111,109,0,0,0,0])],\n      ['sample.m4a', 'audio/mp4', Buffer.from([0,0,0,24,102,116,121,112,77,52,65,32,0,0,0,0])],
+      ['sample.mp4', 'video/mp4', Buffer.from([0,0,0,24,102,116,121,112,105,115,111,109,0,0,0,0])],
+      ['sample.m4a', 'audio/mp4', Buffer.from([0,0,0,24,102,116,121,112,77,52,65,32,0,0,0,0])],
       ['sample.mp3', 'audio/mpeg', Buffer.from('ID3sample')],
       ['sample.wav', 'audio/wav', Buffer.from('RIFFxxxxWAVEdata')]
     ];
